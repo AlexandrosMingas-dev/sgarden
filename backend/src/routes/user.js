@@ -170,11 +170,15 @@ router.post("/load-plugin", (req, res) => {
 			return res.status(400).json({ message: "Plugin name required" });
 		}
 
-		const plugin = require(pluginName);
+		const allowedPlugins = ["dashboard-charts", "export-csv", "notifications"];
+
+		if (!allowedPlugins.includes(pluginName)) {
+			return res.status(403).json({ message: "Plugin not authorized" });
+		}
 
 		return res.json({ 
 			success: true, 
-			plugin: plugin.toString(),
+			plugin: pluginName,
 			message: "Plugin loaded"
 		});
 	} catch (error) {
