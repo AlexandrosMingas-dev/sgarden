@@ -147,7 +147,7 @@ const Header = ({ isAuthenticated, themeMode, toggleTheme }) => {
 					</Box>
 					<Box className={classes.grow} style={{ height: "100%" }} />
 					<Box sx={{ display: "flex", alignItems: "center", color: "text.primary" }}>
-						<IconButton sx={{ ml: 1 }} onClick={toggleTheme} data-testid="dark-mode-toggle">
+						<IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit" data-testid="dark-mode-toggle">
 							{themeMode === 'light' ? (
 								<Brightness7 data-testid="theme-indicator-light" />
 							) : (

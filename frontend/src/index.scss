@@ -165,7 +165,7 @@ body {
 }
 
 text.selector-text {
-	fill: black !important;
+	fill: currentColor !important;
 }
 
 .header-container {
@@ -261,9 +261,7 @@ text.selector-text {
 	color: inherit !important;
 }
 
-.MuiIconButton-root {
-	color: inherit !important;
-}
+
 
 .MuiInputAdornment-positionEnd {
 	color: inherit !important;

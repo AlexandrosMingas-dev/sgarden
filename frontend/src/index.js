@@ -74,6 +74,27 @@ const App = () => {
 				default: themeMode === "dark" ? "#121212" : "#ffffff",
 				paper: themeMode === "dark" ? "#1E1E1E" : "#ffffff",
 			},
+			text: {
+				primary: themeMode === "dark" ? "#ffffff" : "rgba(0, 0, 0, 0.87)",
+				secondary: themeMode === "dark" ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.6)",
+			},
+		},
+		components: {
+			MuiAppBar: {
+				styleOverrides: {
+					root: {
+						backgroundImage: "none",
+					},
+				},
+			},
+			MuiCssBaseline: {
+				styleOverrides: {
+					body: {
+						backgroundColor: themeMode === "dark" ? "#121212" : "#ffffff",
+						color: themeMode === "dark" ? "#ffffff" : "rgba(0, 0, 0, 0.87)",
+					},
+				},
+			},
 		},
 	}), [themeMode]);
 

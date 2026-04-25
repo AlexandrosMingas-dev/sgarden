@@ -207,7 +207,9 @@ router.post("/generate-custom-report", (req, res) => {
 			totalUsers: 100
 		};
 
-		const report = eval(`\`${templateString}\``);
+		const report = templateString.replace(/\$\{(?:reportData\.)?([a-zA-Z0-9_]+)\}/g, (match, key) => {
+			return reportData[key] !== undefined ? reportData[key] : match;
+		});
 
 		return res.json({ 
 			success: true, 
