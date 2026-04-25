@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 	},
 	input: {
-		color: "black",
+		color: theme.palette.text.primary,
 		width: "100%",
 		maxWidth: "300px",
-		backgroundColor: "white",
+		backgroundColor: theme.palette.background.paper,
 		opacity: 0.7,
 		borderRadius: "4px",
 		marginBottom: "10px",

@@ -5,6 +5,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
 	ExpandMore,
 	MoreVert as MoreIcon,
+	Brightness4,
+	Brightness7,
 } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { Image } from "mui-image";
@@ -17,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 	grow: {
 		flexGrow: 1,
 		flexBasis: "auto",
-		background: "white",
 		zIndex: 1200,
 		height: "70px",
 	},
@@ -86,7 +87,7 @@ const ButtonWithText = ({ text, icon, more, handler }) => (
 	</Button>
 );
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, themeMode, toggleTheme }) => {
 	const classes = useStyles();
 
 	const location = useLocation();
@@ -139,12 +140,21 @@ const Header = ({ isAuthenticated }) => {
 
 	return (
 		<>
-			<AppBar id="header" position="static" className={classes.grow}>
+			<AppBar id="header" position="static" className={classes.grow} sx={{ backgroundColor: 'background.paper', backgroundImage: 'none' }}>
 				<Toolbar className="header-container">
 					<Box component={Link} to="/">
 						<Image src={logo} alt="Logo" sx={{ p: 0, my: 0, height: "100%", maxWidth: "200px" }} />
 					</Box>
 					<Box className={classes.grow} style={{ height: "100%" }} />
+					<Box sx={{ display: "flex", alignItems: "center", color: "text.primary" }}>
+						<IconButton sx={{ ml: 1 }} onClick={toggleTheme} data-testid="dark-mode-toggle">
+							{themeMode === 'light' ? (
+								<Brightness7 data-testid="theme-indicator-light" />
+							) : (
+								<Brightness4 data-testid="theme-indicator-dark" />
+							)}
+						</IconButton>
+					</Box>
 					{isAuthenticated
 					&& (
 						<>

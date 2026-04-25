@@ -30,7 +30,6 @@ body {
 	min-height: 100% !important;
 	overflow-x: hidden !important;
 	overflow-y: auto !important;
-	color: black;
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -147,7 +146,7 @@ body {
 		}
 
 		&.-odd {
-			background-color: white !important;
+			background-color: transparent !important;
 
 			&:hover {
 				background-color: map.get($theme, "secondary") !important;
