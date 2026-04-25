@@ -30,6 +30,7 @@ import Dashboard1 from "./screens/Dashboard1.js";
 import Dashboard2 from "./screens/Dashboard2.js";
 import { adjustColors, jwt, colorSuggestions } from "./utils/index.js";
 import Map from "./components/Map.js";
+import { BookmarkProvider } from "./contexts/BookmarkContext.js";
 
 
 const App = () => {
@@ -137,6 +138,8 @@ const App = () => {
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
 	<Router>
-		<App />
+		<BookmarkProvider>
+			<App />
+		</BookmarkProvider>
 	</Router>,
 );

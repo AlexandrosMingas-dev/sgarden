@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
+import { StarBorder, Star } from "@mui/icons-material";
 import Dropdown from "../components/Dropdown.js";
 import Card from "../components/Card.js";
 import Plot from "../components/Plot.js";
 
 import { getData } from "../api/index.js";
+import { useBookmarks } from "../contexts/BookmarkContext.js";
 
 const availableRegions = ["Thessaloniki", "Athens", "Patras"];
 
 const Dashboard = () => {
     const [selectedRegion, setSelectedRegion] = useState("Thessaloniki");
     const [data, setData] = useState({ quarterlySalesDistribution: {}, budgetVsActual: {}, timePlot: {} });
+    const { isBookmarked, toggleBookmark } = useBookmarks();
+    const bookmarked = isBookmarked("dashboard2");
 
     useEffect(() => {
         getData().then((tempData) => {
@@ -24,9 +28,18 @@ const Dashboard = () => {
 
     return (
         <Grid container py={2} flexDirection="column">
-            <Typography variant="h4" gutterBottom color="white.main">
-                Insights
-            </Typography>
+            <Box display="flex" alignItems="center">
+                <Typography variant="h4" gutterBottom color="white.main">
+                    Insights
+                </Typography>
+                <IconButton onClick={() => toggleBookmark("dashboard2")} sx={{ ml: 1, color: "warning.main" }}>
+                    {bookmarked ? (
+                        <Star data-testid="bookmark-active-dashboard2" />
+                    ) : (
+                        <StarBorder data-testid="bookmark-toggle-dashboard2" />
+                    )}
+                </IconButton>
+            </Box>
 
             <Grid item style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: "20px" }}>
                 <Typography variant="body1" style={{ marginRight: "10px" }} color="white.main">Region:</Typography>

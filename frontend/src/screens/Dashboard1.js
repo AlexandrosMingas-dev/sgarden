@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Grid, Typography, Box, Button, TextField } from "@mui/material";
+import { Grid, Typography, Box, Button, TextField, IconButton } from "@mui/material";
+import { StarBorder, Star } from "@mui/icons-material";
 import Dropdown from "../components/Dropdown.js";
 import Card from "../components/Card.js";
 import Plot from "../components/Plot.js";
 import DatePicker from "../components/DatePicker.js";
 import Map from "../components/Map.js";
+import { useBookmarks } from "../contexts/BookmarkContext.js";
 
 import colors from "../_colors.scss";
 
@@ -20,6 +22,8 @@ const Dashboard = () => {
     const [toDate, setToDate] = useState(new Date());
     const [months, setMonths] = useState([]);
     const [data, setData] = useState({ keyMetric: { date: randomDate(), value: generateRandomData(0, 100) }, revenue: [], expenses: [], profit: [], growthRate: [] });
+    const { isBookmarked, toggleBookmark } = useBookmarks();
+    const bookmarked = isBookmarked("dashboard1");
 
     const changePlotData = (fromD, toD) => {
         if (fromD && toD) {
@@ -60,9 +64,18 @@ const Dashboard = () => {
 
     return (
         <Grid container py={2} flexDirection="column">
-            <Typography variant="h4" gutterBottom color="white.main">
-                Analytics
-            </Typography>
+            <Box display="flex" alignItems="center">
+                <Typography variant="h4" gutterBottom color="white.main">
+                    Analytics
+                </Typography>
+                <IconButton onClick={() => toggleBookmark("dashboard1")} sx={{ ml: 1, color: "warning.main" }}>
+                    {bookmarked ? (
+                        <Star data-testid="bookmark-active-dashboard1" />
+                    ) : (
+                        <StarBorder data-testid="bookmark-toggle-dashboard1" />
+                    )}
+                </IconButton>
+            </Box>
 
             <Grid item style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: "20px" }}>
                 <Typography variant="body1" style={{ marginRight: "10px" }} color="white.main">Region:</Typography>

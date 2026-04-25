@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-import { Button, Grid, Menu, MenuItem, Typography } from "@mui/material";
+import { Button, Grid, Menu, MenuItem, Typography, Divider } from "@mui/material";
 import Image from "mui-image";
-import { ExpandMore } from "@mui/icons-material";
+import { ExpandMore, Star } from "@mui/icons-material";
 
 import Accordion from "./Accordion.js";
 
 import { jwt } from "../utils/index.js";
+import { useBookmarks } from "../contexts/BookmarkContext.js";
 
 const useStyles = makeStyles((theme) => ({
 	sidebar: {
@@ -18,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "auto",
 	},
 }));
+
+const dashboardMeta = {
+	dashboard: { label: "Overview", path: "/dashboard" },
+	dashboard1: { label: "Analytics", path: "/dashboard1" },
+	dashboard2: { label: "Insights", path: "/dashboard2" },
+};
 
 const ButtonWithText = ({ text, icon, more, handler }) => (
 	<span key={text}>
@@ -70,6 +77,7 @@ const Sidebar = ({ isSmall: sidebarIsSmall }) => {
 	const [isSmall, setIsSmall] = useState(false);
 	const navigate = useNavigate();
 	const classes = useStyles();
+	const { bookmarks } = useBookmarks();
 
 	const isAdmin = jwt.isAdmin();
 
@@ -104,6 +112,31 @@ const Sidebar = ({ isSmall: sidebarIsSmall }) => {
 
 	return (
 		<div className={classes.sidebar} style={{ width: (isSmall) ? "50px" : "200px", padding: (isSmall) ? "20px 5px" : "20px 5px", textAlign: "center" }}>
+			{!isSmall && bookmarks.length > 0 && (
+				<div data-testid="sidebar-favorites-section" style={{ marginBottom: "10px" }}>
+					<Typography variant="subtitle2" color="white.main" sx={{ opacity: 0.7, textTransform: "uppercase", fontSize: "11px", letterSpacing: "1px", mb: 1 }}>
+						★ Favorites
+					</Typography>
+					{bookmarks.map((id) => {
+						const meta = dashboardMeta[id];
+						if (!meta) return null;
+						return (
+							<Button
+								key={id}
+								data-testid={`sidebar-favorite-${id}`}
+								sx={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "flex-start", padding: "4px 40px 4px 16px" }}
+								onClick={() => navigate(meta.path)}
+							>
+								<Star sx={{ fontSize: "16px", color: "warning.main", mr: 0.5 }} />
+								<Typography align="center" color="white.main" fontSize="small" display="flex" alignItems="center" sx={{ textTransform: "capitalize" }}>
+									{meta.label}
+								</Typography>
+							</Button>
+						);
+					})}
+					<Divider sx={{ borderColor: "rgba(255,255,255,0.2)", my: 1 }} />
+				</div>
+			)}
 			{!isSmall && buttons.map((button) => (
 				<ButtonWithText
 					key={button.text}
